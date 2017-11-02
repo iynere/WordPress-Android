@@ -145,14 +145,10 @@ dependencies {
 
     compile ('com.github.indexos.media-for-mobile:android:43a9026f0973a2f0a74fa813132f6a16f7499c3a')
 
-    releaseCompile project(path:':libs:utils:WordPressUtils', configuration: 'release')
-    debugCompile project(path:':libs:utils:WordPressUtils', configuration: 'debug')
-    releaseCompile project(path:':libs:networking:WordPressNetworking', configuration: 'release')
-    debugCompile project(path:':libs:networking:WordPressNetworking', configuration: 'debug')
-    releaseCompile project(path:':libs:analytics:WordPressAnalytics', configuration: 'release')
-    debugCompile project(path:':libs:analytics:WordPressAnalytics', configuration: 'debug')
-    releaseCompile project(path:':libs:editor:WordPressEditor', configuration: 'release')
-    debugCompile project(path:':libs:editor:WordPressEditor', configuration: 'debug')
+    implementation project(path:':libs:utils:WordPressUtils')
+    implementation project(path:':libs:networking:WordPressNetworking')
+    implementation project(path:':libs:analytics:WordPressAnalytics')
+    implementation project(path:':libs:editor:WordPressEditor')
 
     // Debug
     debugCompile 'com.facebook.stetho:stetho:1.4.2'
