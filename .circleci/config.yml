@@ -2,6 +2,7 @@ version: 2
 jobs:
   build:
     working_directory: ~/WordPress-Android
+    resource_class: large
     docker:
       - image: circleci/android:api-24-alpha  
     environment:
@@ -28,4 +29,4 @@ jobs:
             - .gradle/caches
             - .gradle/wrapper
             
-      - run: ./gradlew assembleVanillaRelease -PpreDexEnable=false -Pcom.android.build.threadPoolSize=1 -Dorg.gradle.parallel=false -Dorg.gradle.jvmargs="-Xms256m -Xmx2048m" -Dorg.gradle.daemon=false
+      - run: ./gradlew assembleVanillaRelease -PpreDexEnable=false -Pcom.android.build.threadPoolSize=1 -Dorg.gradle.parallel=false -Dorg.gradle.jvmargs="-Xms256m -Xmx6656M" -Dorg.gradle.daemon=false
