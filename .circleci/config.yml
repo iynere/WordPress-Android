@@ -1,0 +1,31 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/WordPress-Android
+    docker:
+      - image: circleci/android:api-26-alpha  
+    environment:
+      ANDROID_SDKS: android-14
+      ANDROID_TARGET: android-14
+      GRADLE_USER_HOME: .gradle
+      GRADLE_OPTS: "-XX:MaxPermSize=4g -Xmx4g"
+      MALLOC_ARENA_MAX: 2   
+    
+    steps:
+      - checkout
+      
+      # Copy gradle.properties-example to gradle.properties.
+      - run: cp WordPress/gradle.properties-example WordPress/gradle.properties
+          
+      - restore_cache:
+          key: gradle-v1-{{ checksum "WordPress/build.gradle" }}
+          
+      - run: echo yes | android update sdk -a --no-ui --force
+      
+      - run: ./gradlew -PdisablePreDex assembleVanillaRelease lint test || (grep -A20 -B2 'severity="Error"' -r --include="*.xml" WordPress libs; exit 1)
+      
+      - save_cache:
+          key: gradle-v1-{{ checksum "WordPress/build.gradle" }}
+          paths:
+            - .gradle/caches
+            - .gradle/wrapper
