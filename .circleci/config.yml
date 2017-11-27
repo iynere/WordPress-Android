@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/WordPress-Android
     docker:
-      - image: circleci/android:api-26-alpha  
+      - image: circleci/android:api-24-alpha  
     environment:
       ANDROID_SDKS: android-14
       ANDROID_TARGET: android-14
@@ -20,12 +20,12 @@ jobs:
       - restore_cache:
           key: gradle-v1-{{ checksum "WordPress/build.gradle" }}
           
-      - run: echo y | android update sdk -u -a -t android-26,build-tools-25.0.3,extra-android-m2repository,extra-android-support,platform-tools,tools
-      
-      - run: ./gradlew -PdisablePreDex assembleVanillaRelease lint test || (grep -A20 -B2 'severity="Error"' -r --include="*.xml" WordPress libs; exit 1)
+      - run: echo y | android update sdk --use-sdk-wrapper --filter android-26,build-tools-25.0.3,extra-android-m2repository,extra-android-support,platform-tools,tools && ./gradlew -PdisablePreDex lint || (grep -A20 -B2 'severity="Error"' WordPress/build/**/*.xml; exit 1)
       
       - save_cache:
           key: gradle-v1-{{ checksum "WordPress/build.gradle" }}
           paths:
             - .gradle/caches
             - .gradle/wrapper
+            
+      - run: ./gradlew -PdisablePreDex -Pcom.android.build.threadPoolSize=1 -Dorg.gradle.jvmargs="-Xms512m -Xmx2048m" -Dorg.gradle.daemon=false assembleVanillaRelease
