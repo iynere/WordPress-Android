@@ -28,4 +28,4 @@ jobs:
             - .gradle/caches
             - .gradle/wrapper
             
-      - run: ./gradlew -PdisablePreDex -Pcom.android.build.threadPoolSize=1 -Dorg.gradle.jvmargs="-Xms512m -Xmx2048m" -Dorg.gradle.daemon=false assembleVanillaRelease
+      - run: ./gradlew -PdisablePreDex -Pcom.android.build.threadPoolSize=1 -Dorg.gradle.jvmargs="-Xms512m -Xmx3072m" -Dorg.gradle.daemon=false assembleVanillaRelease --stacktrace
