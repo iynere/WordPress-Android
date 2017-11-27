@@ -15,7 +15,7 @@ jobs:
       - checkout
       
       # Copy gradle.properties-example to gradle.properties.
-      - run: cp WordPress/gradle.properties-example WordPress/gradle.properties
+      - run: cp gradle.properties-example gradle.properties
           
       - restore_cache:
           key: gradle-v1-{{ checksum "WordPress/build.gradle" }}
