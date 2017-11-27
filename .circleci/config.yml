@@ -20,7 +20,7 @@ jobs:
       - restore_cache:
           key: gradle-v1-{{ checksum "WordPress/build.gradle" }}
           
-      - run: echo y | android update sdk --use-sdk-wrapper --filter android-26,build-tools-25.0.3,extra-android-m2repository,extra-android-support,platform-tools,tools && ./gradlew -PdisablePreDex lint || (grep -A20 -B2 'severity="Error"' WordPress/build/**/*.xml; exit 1)
+      - run: echo y | android update sdk --use-sdk-wrapper --filter android-26,build-tools-25.0.3,extra-android-m2repository,platform-tools,tools
       
       - save_cache:
           key: gradle-v1-{{ checksum "WordPress/build.gradle" }}
